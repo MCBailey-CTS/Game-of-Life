@@ -10,6 +10,10 @@ const solve = true;
 
 const circle_size = 20;
 
+let checkBox;
+
+let boxIsChecked = false;
+
 // 282, one up or one down
 
 const rowOperations = [
@@ -49,6 +53,17 @@ function setup()
         for (let c = 0; c < length; c++)
             grid[r].push([...candidates]);
     }
+
+    checkbox = createCheckbox('Show highlights', boxIsChecked);
+
+    checkbox.changed(myCheckedEvent);
+
+}
+
+function myCheckedEvent()
+{
+
+    boxIsChecked = checkbox.checked();
 }
 
 function draw()
@@ -83,6 +98,9 @@ function draw()
             strokeWeight(4);
 
             fill("white");
+
+            if (boxIsChecked && grid[r][c].indexOf(currentCandidate) > -1)
+                fill("red");
 
             rect(c * cell_size, r * cell_size, cell_size, cell_size);
 
@@ -241,7 +259,6 @@ function solveGrid()
             }
         }
 
-
     for (let r = 0; r < length; r++)
         for (let c = 0; c < length - 1; c++) {
 
@@ -280,6 +297,74 @@ function solveGrid()
                 const loc0 = [r, c];
 
                 const loc1 = [r, c + 1];
+                for (let candidate0 of [...grid[loc0[0]][loc0[1]]]) {
+
+                    const candidateMinus = candidate0 + 1;
+
+                    let index = grid[loc1[0]][loc1[1]].indexOf(candidateMinus);
+
+                    if (index > -1) continue;
+
+                    index = grid[loc0[0]][loc0[1]].indexOf(candidate0);
+
+                    grid[loc0[0]][loc0[1]].splice(index, 1);
+                }
+
+                for (let candidate0 of [...grid[loc1[0]][loc1[1]]]) {
+
+                    const candidatePlus = candidate0 - 1;
+
+                    let index = grid[loc0[0]][loc0[1]].indexOf(candidatePlus);
+
+                    if (index > -1) continue;
+
+                    index = grid[loc1[0]][loc1[1]].indexOf(candidate0);
+
+                    grid[loc1[0]][loc1[1]].splice(index, 1);
+                }
+            }
+
+
+        }
+
+    for (let r = 0; r < length - 1; r++)
+        for (let c = 0; c < length; c++) {
+
+            if (colOperations[r][c] == 1) {
+                const loc0 = [r, c];
+
+                const loc1 = [r + 1, c];
+                for (let candidate0 of [...grid[loc0[0]][loc0[1]]]) {
+
+                    const candidateMinus = candidate0 - 1;
+
+                    let index = grid[loc1[0]][loc1[1]].indexOf(candidateMinus);
+
+                    if (index > -1) continue;
+
+                    index = grid[loc0[0]][loc0[1]].indexOf(candidate0);
+
+                    grid[loc0[0]][loc0[1]].splice(index, 1);
+                }
+
+                for (let candidate0 of [...grid[loc1[0]][loc1[1]]]) {
+
+                    const candidatePlus = candidate0 + 1;
+
+                    let index = grid[loc0[0]][loc0[1]].indexOf(candidatePlus);
+
+                    if (index > -1) continue;
+
+                    index = grid[loc1[0]][loc1[1]].indexOf(candidate0);
+
+                    grid[loc1[0]][loc1[1]].splice(index, 1);
+                }
+            }
+
+            if (colOperations[r][c] == 2) {
+                const loc0 = [r, c];
+
+                const loc1 = [r + 1, c];
                 for (let candidate0 of [...grid[loc0[0]][loc0[1]]]) {
 
                     const candidateMinus = candidate0 + 1;
