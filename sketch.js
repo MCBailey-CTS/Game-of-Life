@@ -1,23 +1,29 @@
-const length = 10;
+const length = 9;
 
 const grid = [];
 
-const cell_size = 30;
+
+
+const cell_size = 60;
 
 function setup()
 {
-    createCanvas(400, 400);
+    createCanvas(600, 600);
+
+
+    const candidates = [1, 2, 3, 5, 6, 7, 8, 9];
+
 
     for (let r = 0; r < length; r++) {
         grid.push([]);
 
         for (let c = 0; c < length; c++)
-            grid[r].push(false);
+            grid[r].push([...candidates]);
     }
 
-    grid[0][0] = 1;
+    // grid[0][0] = 1;
 
-    grid[3][3] = 1;
+    // grid[3][3] = 1;
 }
 
 function draw()
@@ -26,12 +32,43 @@ function draw()
 
     for (let r = 0; r < length; r++)
         for (let c = 0; c < length; c++) {
-            if (grid[r][c])
-                fill("green");
-            else
-                fill("black");
+
+            let str = "";
+
+            let index = 0;
+
+            for (let r1 = 0; r1 < 3; r1++) {
+                for (let c1 = 0; c1 < 3; c1++) {
+                    index++;
+
+                    if (grid[r][c].indexOf(index) > -1)
+                        str += `${index}`;
+                    else
+                        str += `${0}`;
+
+
+
+                }
+
+                str += '\n';
+            }
+
+            // for (const t of grid[r][c]) {
+            //     str += t + '\n';
+            // }
+
+
+            stroke('grey');
+
+            strokeWeight(4);
+
+            fill("white");
 
             rect(r * cell_size, c * cell_size, cell_size, cell_size);
+            textSize(10);
+            // text(str, r * cell_size, c * cell_size);
+            text(str, r * cell_size + 20, c * cell_size + 20);
+
         }
 }
 
