@@ -2,7 +2,7 @@ const length = 10;
 
 const grid = [];
 
-const cell_size = 10;
+const cell_size = 30;
 
 function setup()
 {
@@ -37,17 +37,31 @@ function draw()
 
 function mousePressed()
 {
-    console.log(`${mouseX} ${mouseY}`);
+    const clickedRow = mouseY;
 
-    let index = 0;
+    const clickedCol = mouseX;
 
-    for (let i = 0; i < length; i++)
-        // if (i * cell_size)
+    let r = -1;
 
+    let c = -1;
 
-        if (mouseY < 10 && mouseX < 10)
-            grid[0][0] = !grid[0][0];
+    if (clickedRow < 0) return;
 
+    for (let i = 1; i < length * cell_size; i += cell_size) {
+        if (clickedRow < i)
+            break;
 
+        r++;
+    }
 
+    if (clickedCol < 0) return;
+
+    for (let i = 1; i < length * cell_size; i += cell_size) {
+        if (clickedCol < i)
+            break;
+
+        c++;
+    }
+
+    grid[c][r] = !grid[c][r];
 }
