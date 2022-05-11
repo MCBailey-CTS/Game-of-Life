@@ -4,8 +4,7 @@ const grid = [];
 
 const cell_size = 10;
 
-function setup()
-{
+function setup() {
     createCanvas(400, 400);
 
     for (let r = 0; r < length; r++) {
@@ -20,8 +19,7 @@ function setup()
     grid[3][3] = 1;
 }
 
-function draw()
-{
+function draw() {
     background(220);
 
     for (let r = 0; r < length; r++)
@@ -35,18 +33,17 @@ function draw()
         }
 }
 
-function mousePressed()
-{
+function mousePressed() {
     console.log(`${mouseX} ${mouseY}`);
 
     let index = 0;
 
-    for (let i = 0; i < length; i++)
-        // if (i * cell_size)
+    // for (let i = 0; i < length; i++)
+    // if (i * cell_size)
 
 
-        if (mouseY < 10 && mouseX < 10)
-            grid[0][0] = !grid[0][0];
+    if (mouseY < 10 && mouseX < 10)
+        grid[0][0] = !grid[0][0];
 
 
 
